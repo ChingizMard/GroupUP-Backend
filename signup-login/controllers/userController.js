@@ -9,10 +9,30 @@ const saltRounds = 10;
  * Signs the user up.
  *
  * This function validates user input and then creates a new user document
- * inside of the database
+ * inside of the database.
+ *
+ * The data object is as follows:
+ *
+ *      Name        Type    Required             Description
+ * ------------- -------- ---------- ----------------------------------
+ * username      String   Yes        The user's username
+ * password      String   Yes        The user's password in plaintext
+ * age           Number   No         The user's age
+ * description   String   No         The user's profile description
+ *
+ * 
+ * The callback function is as follows:
+ *
+ *  Parameters                  Description
+ * ------------ --------------------------------------------
+ * err          Any error object thrown during creation.
+ *               If no errors occurred, this object is null
+ *
+ * user         The new user document created
+ *
  * @param  {Object}   data      An object containing the data required to make
  *                              the new user
- * @param  {Function} callback  The callback function
+ * @param  {Function} callback  The error-first callback function
  * @return {Void}               Nothing
  */
 module.exports.signup = function(data, callback) {
