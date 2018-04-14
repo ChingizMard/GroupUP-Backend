@@ -4,7 +4,8 @@
   "description": "database for the project",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node index.js"
   },
   "author": "Donald Isaac",
   "license": "MIT",
