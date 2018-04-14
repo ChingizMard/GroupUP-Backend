@@ -1,0 +1,16 @@
+{
+  "name": "signup-login",
+  "version": "1.0.0",
+  "description": "database for the project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Donald Isaac",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^2.0.0",
+    "mongodb": "^3.0.6",
+    "mongoose": "^5.0.14"
+  }
+}
