@@ -15,3 +15,6 @@ var Schema = mongoose.Schema,
 chatSchema = new Schema({
   messages: [messageSchema]
 });
+
+// Turn the schema into a model and export it
+module.exports = mongoose.model('Chat', chatSchema);

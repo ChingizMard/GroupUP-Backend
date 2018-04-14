@@ -12,4 +12,5 @@ activitySchema = new Schema({
 
 });
 
+// Turn the schema into a model and export it
 module.exports = mongoose.model('Activity', activitySchema);
