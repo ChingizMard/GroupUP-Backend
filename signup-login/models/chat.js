@@ -9,7 +9,8 @@ var Schema = mongoose.Schema,
       type: Schema.Types.ObjectId,
       required: true
     },
-    message: String
+    message: String,
+    dateSent: {type: Date, default: Date.now()}
   });
 
 chatSchema = new Schema({

@@ -4,16 +4,19 @@
   "description": "database for the project",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "nodemon",
     "start": "node index.js"
   },
   "author": "Donald Isaac",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^2.0.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "mongo-sanitize": "^1.0.0",
     "mongodb": "^3.0.6",
-    "mongoose": "^5.0.14"
+    "mongoose": "^5.0.14",
+    "nodemon": "^1.17.3"
   }
 }

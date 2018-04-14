@@ -6,10 +6,10 @@ var User = require('../models/user.js'),
 const saltRounds = 10;
 
 /**
- * Signs the user up.
+ * Signs the user up for the service.
  *
- * This function validates user input and then creates a new user document
- * inside of the database.
+ * This function validates user input and then creates a new document
+ * inside of the user collection.
  *
  * The data object is as follows:
  *
@@ -20,13 +20,13 @@ const saltRounds = 10;
  * age           Number   No         The user's age
  * description   String   No         The user's profile description
  *
- * 
+ *
  * The callback function is as follows:
  *
  *  Parameters                  Description
  * ------------ --------------------------------------------
  * err          Any error object thrown during creation.
- *               If no errors occurred, this object is null
+ *              If no errors occurred, this object is null
  *
  * user         The new user document created
  *
@@ -36,6 +36,7 @@ const saltRounds = 10;
  * @return {Void}               Nothing
  */
 module.exports.signup = function(data, callback) {
+  // Run validation checks on the input
   if (!validate(data)) {
     callback(Error('You must pass a username and a password.'), false);
   }
@@ -78,12 +79,66 @@ module.exports.signup = function(data, callback) {
   });
 }
 
-module.exports.signin = function(data, callback) {
+/**
+ * Logs a user in.
+ *
+ * Searches the database for the requested user and sends it to the
+ * user defined callback function.
+ *
+ * The data object is as follows:
+ *
+ *      Name        Type    Required             Description
+ * ------------- -------- ---------- ----------------------------------
+ * username      String   Yes        The user's username
+ * password      String   Yes        The user's password in plaintext
+ *
+ *
+ * The callback function is as follows:
+ *
+ *  Parameters                  Description
+ * ------------ --------------------------------------------
+ * err          Any error object thrown during creation.
+ *              If no errors occurred, this object is null
+ *
+ * user         The now logged in user
+ *
+ * @param  {Object}   data     Object containing user lookup data
+ * @param  {Function} callback [description]
+ * @return {Void}            None
+ */
+module.exports.login = function(data, callback) {
+  // Run validation checks on the input
+  if (!validate(data)) {
+    callback(Error('You must pass a username and a password.'), false);
+  }
 
-}
+  // Look up the username in the database for the corresponding user document
+  User.findOne({
+    'username': data.username
+  }, function(err, user) {
+    if (err) {
+      callback(err, null);
+      return;
+    }
 
-module.exports.update = function(data, callback) {
+    // If no user with that username exists, throw an error
+    if (!user) {
+      callback(new Error('Incorrect username or password'), null);
+      return;
+    }
 
+    // If the password is incorrect, throw an error
+    let passEqual = bcrypt.compareSync(data.password, user.password);
+    if (!passEqual) {
+      callback(new Error('Incorrect username or password'), null);
+      return;
+    }
+
+    // Update the lastSeen attribute to now and run the callback function
+    user.lastSeen = Date.now();
+    user.save(callback);
+
+  });
 }
 
 /**
