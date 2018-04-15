@@ -12,7 +12,7 @@ router.route('/')
       .exec()
       .then(function(activity) {
         console.log(req.body);
-        activity.addAttendee(new ObjectId(req.body.userID), function(err, activity) {
+        activity.addAttendee(new ObjectId(req.session.user._id), function(err, activity) {
           if (err) {
             res.status(400).json({
               success: false,

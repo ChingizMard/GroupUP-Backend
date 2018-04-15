@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Activity = require('../../models/activity');
+var User = require('../../models/user.js')
 
 router.route('/')
   .post(function(req, res) {
@@ -7,7 +8,7 @@ router.route('/')
     // TODO validate input from req.body
     var data = req.body;
     data.hostUser = req.session.user._id;
-    data.attendees = req.session.user.attendees || [];
+    data.attendees = req.session.user.attendees || [req.session.user._id];
     data.description = data.description || "No description :(";
     //data.loc = req.body.loc || [];
 
@@ -19,6 +20,17 @@ router.route('/')
           message: err
         });
       } else {
+        User.findOne({'username': req.session.user._id},function(err,user){
+          if (err){
+            console.log("Error thrown while appending created id to host accepted activities");
+            res.status(400).json({
+              success: false,
+              message: err
+            });
+          }else{
+            user.acceptedActivities.append(newActivity._id);
+          }
+        })
         res.status(200).json({
           success: true
         });
