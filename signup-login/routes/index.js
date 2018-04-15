@@ -11,5 +11,5 @@ routes.route('/')
 });
 
 routes.use('/signup', require('./signupRouter'));
-routes.use('/signin', require('./signinRouter'));
+routes.use('/login', require('./loginRouter'));
 module.exports = routes;

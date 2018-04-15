@@ -4,7 +4,7 @@ router = express.Router();
 
 router.route('/')
   .post(function(req, res) {
-    userController.signin(req.body, function(err, user) {
+    userController.login(req.body, function(err, user) {
       if (err) {
         res.status(400).json({
           success: false,
