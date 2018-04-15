@@ -1,9 +1,7 @@
 const router = require('express').Router();
 
-// User routes
-router.use('/user', require('./userRouter'));
-
-// Activity routes
-router.use('/activity', require('./activityRouter'));
+router.use('/signup', require('./signupRouter'));
+router.use('/login', require('./loginRouter'));
+router.use('/signout', require('./signupRouter'));
 
 module.exports = router;
