@@ -3,7 +3,15 @@ const Activity = require('../../models/activity');
 
 router.route('/')
   .post(function(req, res) {
-    Activity.findAvailableActivities(req.body, function(err, activities) {
+
+    // TODO validate input from req.body
+    var data = req.body;
+    data.hostUser = req.session.user._id;
+    data.attendees = req.session.user.attendees || [];
+    //data.loc = req.body.loc || [];
+
+    var newActivity = new Activity(data);
+    newActivity.save(function(err, activity) {
       if (err) {
         res.status(400).json({
           success: false,
@@ -11,8 +19,7 @@ router.route('/')
         });
       } else {
         res.status(200).json({
-          success: true,
-          activities: activities
+          success: true
         });
       }
     });
