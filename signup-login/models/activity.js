@@ -1,4 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+  User = require('./user');
+
 var Schema = mongoose.Schema,
   activitySchema;
 
@@ -31,10 +33,10 @@ activitySchema = new Schema({
  * @param  {Function} callback The callback function detailed above
  * @return {Void}            None
  */
-activitySchema.methods.addUserToAttendees = function(user, callback){
+activitySchema.methods.addUserToAttendees = function(user, callback) {
   this.attendees.append(user._id)
-  this.save(function(err, activity){
-    if(err)
+  this.save(function(err, activity) {
+    if (err)
       callback(err, null);
   });
 
@@ -73,12 +75,12 @@ activitySchema.methods.addUserToAttendees = function(user, callback){
  * @param  {Function} callback The error-first callback function, specified above
  * @return {Void}              None
  */
-activitySchema.static('findAvailableActivities', function(area, callback){
-  if(!area.center || !area.radius){
+activitySchema.static('findAvailableActivities', function(area, callback) {
+  if (!area.center || !area.radius) {
     callback(new Error('You must pass the required information.'), null);
     return;
   }
-  if(area.center.length != 2){
+  if (area.center.length != 2) {
     callback(new Error('area.center must have exactly two entries.'), null);
     return;
   }
@@ -88,7 +90,35 @@ activitySchema.static('findAvailableActivities', function(area, callback){
   circle('loc', area).
   $where('this.attendees.length < this.maxAttendees').
   exec(callback);
-})
+});
+
+/**
+ * Adds an attendee to the activity.
+ * @param  {[type]}   userID   [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+activitySchema.methods.addAttendee = function(userID, callback) {
+  if (this.attendees.length < this.maxAttendees) {
+    var doc = this; // Make sure 'this' doesn't change inside promise chain
+    User.findOne({"_id":userID})
+    .exec()
+    .then(function(user){
+      // User has had activity saved to their activity list
+      doc.attendees.push(user._id);
+      return doc.save();
+    })
+    .then(function(activity){
+      // Activity has had user saved to the attendee list
+      callback(null, activity);
+    })
+    .catch(function(err){
+      callback(err, null);
+    });
+  } else {
+    callback(new Error('Activity is full.'), null);
+  }
+}
 
 // Turn the schema into a model and export it
 module.exports = mongoose.model('Activity', activitySchema);

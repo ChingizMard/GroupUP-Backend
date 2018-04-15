@@ -9,8 +9,9 @@ const express = require('express'),
   mongoose = require('mongoose'),
   config = require('./config'),
   routes = require('./routes'),
-  session = require('express-session')
-  cookieParser = require('cookie-parser');;
+  session = require('express-session'),
+  cookieParser = require('cookie-parser'),
+  bluebird = require('bluebird');
 
 // Connect to MongoDB using a url from the config file
 mongoose.connect(config.database.url);
@@ -25,8 +26,9 @@ mongoose.connection.on('connected', function() {
   console.log('successfully connected to MongoDB')
 });
 
-// Ensure that mongoose's promise system is the same as the global promise system
-mongoose.Promise = global.Promise;
+// Set both the global and mongoose promise system to bluebird
+mongoose.Promise = bluebird;
+global.Promise = bluebird;
 
 // Create Express app
 var app = express();

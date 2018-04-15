@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^2.0.0",
+    "cjs": "0.0.11",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
