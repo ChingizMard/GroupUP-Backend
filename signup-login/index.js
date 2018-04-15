@@ -4,7 +4,6 @@
  * Useful links for this application:
  *  *Mongoose documentation: http://mongoosejs.com/docs/index.html
  */
-
 const express = require('express'),
   path = require('path'),
   mongoose = require('mongoose'),
@@ -32,11 +31,9 @@ mongoose.Promise = global.Promise;
 // Create Express app
 var app = express();
 
-
  ////////////////////////////////////////////////////
  // Express App configuration and middleware setup //
  ////////////////////////////////////////////////////
-
 
 app.set('port', config.server.port);
 app.use(cookieParser());
