@@ -9,5 +9,7 @@ routes.route('/')
   res.status(200).json({message: 'POST received at "/"'});
   next();
 });
-routes.use('/signup', require('./signupRouter.js'))
+
+routes.use('/signup', require('./signupRouter'));
+routes.use('/signin', require('./signinRouter'));
 module.exports = routes;

@@ -52,31 +52,31 @@ module.exports.signup = function(data, callback) {
       callback('An error occured on user lookup.', null);
       return;
     }
-    if (user) {
+
+    if (user.length != 0) {
       callback('A user with this username already exists.', null);
       return;
     }
 
-  });
+    User.create({
+      username: data.username,
+      password: bcrypt.hashSync(data.password, saltRounds),
+      age: data.age,
+      description: data.description,
+      acceptedActivities: [],
+      lastSeen: Date.now()
+    }, function(err, newUser) {
+      if (err) {
+        callback(err, null);
+        return;
+      }
 
-  // Create the new user document
-  User.create({
-    username: data.username,
-    password: bcrypt.hashSync(data.password, saltRounds),
-    age: data.age,
-    description: data.description,
-    acceptedActivities: [],
-    lastSeen: Date.now()
-  }, function(err, newUser) {
-    if (err) {
-      callback(err, null);
+      // New user created successfully, run callback and end function
+      callback(null, newUser);
       return;
-    }
-
-    // New user created successfully, run callback and end function
-    callback(null, newUser);
-    return;
+    });
   });
+
 }
 
 /**
