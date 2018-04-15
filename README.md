@@ -1,6 +1,6 @@
 # Groupify Backend Repository
 
-This is the RESTful backend for Groupify, a platform for people to create and join activities nearby.
+This is the RESTful backend for Groupify, a platform for people to create and join activities nearby. This project was created during the 2018 Philly Codefest hackathon.
 
 ## Setup
 
@@ -25,7 +25,7 @@ Once you have spun up the Docker image, you can interface with the API by sendin
 
 The following is a list of functionality this API allows. Please keep in mind this was written in 15 hours.
 
-#### Overview
+### Overview
 - /user/signup - Signs up a new user
 - /user/login - Logs a user in
 - /user/signout - Signs a user out
@@ -34,37 +34,54 @@ The following is a list of functionality this API allows. Please keep in mind th
 - /activity/find_activity - Finds all available activities within an area
 - /administrator/system - Gets system information about what the backend is running on
 
-#### Method Descriptions
-**/user/signup**
+### Method Descriptions
+#### /user/signup
 
 Signs up a new user. After signing the user up, the server then logs the user in.
 Logging in is handled using sessions. The user session will expire after 15 minutes, however this value can be configured to your liking.
 
-The signup JSON request is structured as follows:
+##### Request Format:
 
 - **username**: String - The user's username
 - **password**: String - The user's password in plaintext (will get hashed on the server)
 - **age**: Number - The user's age (optional)
 - **description**: String - A profile description (optional)
 
-The signup JSON response is structured as follows:
+##### Response Format:
 
 - **success**: Boolean - True if the signup was successful, false otherwise
 - **message**: String - The error message if and only if an error is thrown
 
-The API
+#### /user/login
 
-**/user/login**
+Logs a user in. Logging in is handled using sessions. The user session will expire after 15 minutes, however this value can be configured to your liking.
 
-**/user/signout**
+##### Request Format:
 
-**/activity/add_attendee**
+- **username**: String - The user's username
+- **password**: String - The user's password in plaintext
 
-**/activity/create_activity**
+##### Response Format:
 
-**/activity/find_activity**
+- **success**: Boolean - True if the signup was successful, false otherwise
+- **message**: String - The error message if and only if an error is thrown
 
-**/administrator/system**
+#### /user/signout
+
+#### /activity/add_attendee
+
+#### /activity/create_activity
+
+#### /activity/find_activity
+
+#### /administrator/system
+
 ## System Info
 
 This is the database layer of Groupify. The view layer is handled by iOS, and we have no need for an application layer.
+
+## To Do
+
+- Implement better data validation practices
+- Implement more activity modification features
+- Implement a way for an activity to end
