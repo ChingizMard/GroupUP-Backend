@@ -6,7 +6,6 @@ router.route('/')
   .post(function(req, res) {
     userController.signup(req.body, function(err, user) {
       if (err) {
-        console.dir(err);
         res.status(400).json({
           success: false,
           message: err
