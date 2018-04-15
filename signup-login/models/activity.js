@@ -92,6 +92,13 @@ activitySchema.static('findAvailableActivities', function(area, callback) {
   exec(callback);
 });
 
+activitySchema.static('findAttendedActivities', function(user_id, callback) {
+  return this.find({
+    attendees: { $in: [user_id]}
+  }).exec(callback);
+
+});
+
 /**
  * Adds an attendee to the activity.
  *
