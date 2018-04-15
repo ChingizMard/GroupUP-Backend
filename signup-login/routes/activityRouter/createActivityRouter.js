@@ -20,7 +20,7 @@ router.route('/')
           message: err
         });
       } else {
-        User.findOne({'username': req.session.user._id},function(err,user){
+        User.findOne({'_id': req.session.user._id}, function(err,user){
           if (err){
             console.log("Error thrown while appending created id to host accepted activities");
             res.status(400).json({
@@ -29,10 +29,10 @@ router.route('/')
             });
           }else{
             user.acceptedActivities.append(newActivity._id);
+            res.status(200).json({
+              success: true
+            });
           }
-        })
-        res.status(200).json({
-          success: true
         });
       }
     });
