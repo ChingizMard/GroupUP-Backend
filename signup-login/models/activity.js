@@ -94,27 +94,39 @@ activitySchema.static('findAvailableActivities', function(area, callback) {
 
 /**
  * Adds an attendee to the activity.
- * @param  {[type]}   userID   [description]
- * @param  {Function} callback [description]
- * @return {[type]}            [description]
+ *
+ * This method adds a user to the activity's attendee list. It also
+ * Adds the activity ID to the user's accpetedActivities list.
+ *
+ * @param  {ObjectId}   userID      The user document's ObjectId
+ * @param  {Function}   callback    the error-first callback function
+ * @return {Void}                   Nothing
  */
 activitySchema.methods.addAttendee = function(userID, callback) {
   if (this.attendees.length < this.maxAttendees) {
     var doc = this; // Make sure 'this' doesn't change inside promise chain
-    User.findOne({"_id":userID})
-    .exec()
-    .then(function(user){
-      // User has had activity saved to their activity list
-      doc.attendees.push(user._id);
-      return doc.save();
-    })
-    .then(function(activity){
-      // Activity has had user saved to the attendee list
-      callback(null, activity);
-    })
-    .catch(function(err){
-      callback(err, null);
-    });
+    User.findOne({
+        "_id": userID
+      })
+      .exec()
+      .then(function(user) {
+        // Save activity ID into user's acceptedActivities list
+        user.acceptedActivities.push(doc._id);
+        return user.save();
+
+      })
+      .then(function(user) {
+        // Save user ID into activity's attendee list
+        doc.attendees.push(user._id);
+        return doc.save();
+      })
+      .then(function(activity) {
+        // Activity has had user saved to the attendee list
+        callback(null, activity);
+      })
+      .catch(function(err) {
+        callback(err, null);
+      });
   } else {
     callback(new Error('Activity is full.'), null);
   }

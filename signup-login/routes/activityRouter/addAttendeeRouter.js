@@ -1,16 +1,18 @@
 const router = require('express').Router();
 const Activity = require('../../models/activity');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 router.route('/')
   .post(function(req, res) {
     // This is right about where I discovered promises :T
     Activity
       .findOne({
-        "_id": req.body.activityID
+        "_id": new ObjectId(req.body.activityID)
       })
       .exec()
       .then(function(activity) {
-        activity.addAttendee(req.body.userID, function(err, activity) {
+        console.log(req.body);
+        activity.addAttendee(new ObjectId(req.body.userID), function(err, activity) {
           if (err) {
             res.status(400).json({
               success: false,

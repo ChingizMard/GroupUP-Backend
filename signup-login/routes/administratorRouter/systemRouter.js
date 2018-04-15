@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const os = require('os');
 
+/**
+ * Gets the host computer's system information
+ */
 router.route('/')
 .get(function(req, res){
   res.status(200).json({
