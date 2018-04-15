@@ -28,7 +28,9 @@ router.route('/')
               message: err
             });
           }else{
-            user.acceptedActivities.append(newActivity._id);
+            console.log("Acceptied activities - " + user.acceptedActivities);
+            console.log("ID - " + newActivity._id);
+            user.acceptedActivities.push(newActivity._id);
             res.status(200).json({
               success: true
             });
