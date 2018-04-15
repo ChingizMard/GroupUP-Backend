@@ -21,7 +21,7 @@ docker run -b 4000:4000 groupify-backend
 
 Once you have spun up the Docker image, you can interface with the API by sending JSON to `localhost:4000/[api-method]` (or wherever your Docker container is deployed).
 
-## Current Methods
+## Documentation
 
 The following is a list of functionality this API allows. Please keep in mind this was written in 15 hours.
 
@@ -34,6 +34,7 @@ The following is a list of functionality this API allows. Please keep in mind th
 - /activity/find_activity - Finds all available activities within an area
 - /administrator/system - Gets system information about what the backend is running on
 
+#### Method Descriptions
 **/user/signup**
 
 Signs up a new user. After signing the user up, the server then logs the user in.
