@@ -10,7 +10,7 @@ const express = require('express'),
   mongoose = require('mongoose'),
   config = require('./config'),
   routes = require('./routes'),
-  session = require('express-session'),
+  session = require('express-session')
   cookieParser = require('cookie-parser');;
 
 // Connect to MongoDB using a url from the config file
@@ -42,7 +42,6 @@ app.set('port', config.server.port);
 app.use(cookieParser());
 app.use(express.json()); // JSON middleware; https://expressjs.com/en/api.html#express.json
 app.use(express.static(path.join(__dirname, 'public')));// Static resources (e.g: CSS files)
-app.use('/', routes); // Add router middleware
 app.use(session({
   // See https://github.com/expressjs/session#options for documentation
   secret: config.server.secret,
@@ -50,6 +49,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+app.use('/', routes); // Add router middleware
 
 // Have the app listen on a port. The app is now ready to be interfaced with
 app.listen(app.get('port'), function() {
