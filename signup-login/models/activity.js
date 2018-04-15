@@ -45,6 +45,9 @@ activitySchema.methods.addUserToAttendees = function(user, callback){
   user.save(callback);
 }
 
-activitySchema.methods.findAvailableEvents
+activitySchema.methods.findAvailableEvents = function(location, callback){
+
+}
+
 // Turn the schema into a model and export it
 module.exports = mongoose.model('Activity', activitySchema);
