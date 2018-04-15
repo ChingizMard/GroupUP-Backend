@@ -10,6 +10,11 @@ routes.route('/')
   next();
 });
 
+/*
+ * User API calls
+ */
 routes.use('/signup', require('./signupRouter'));
 routes.use('/login', require('./loginRouter'));
+routes.user('/signout', require('./signoutRouter'))
+
 module.exports = routes;

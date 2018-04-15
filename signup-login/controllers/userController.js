@@ -11,7 +11,7 @@ const saltRounds = 10;
  * This function validates user input and then creates a new document
  * inside of the user collection.
  *
- * The data object is as follows:
+ * The data object is structured as follows:
  *
  *      Name        Type    Required             Description
  * ------------- -------- ---------- ----------------------------------
@@ -21,7 +21,7 @@ const saltRounds = 10;
  * description   String   No         The user's profile description
  *
  *
- * The callback function is as follows:
+ * The callback function is structured as follows:
  *
  *  Parameters                  Description
  * ------------ --------------------------------------------
@@ -85,7 +85,7 @@ module.exports.signup = function(data, callback) {
  * Searches the database for the requested user and sends it to the
  * user defined callback function.
  *
- * The data object is as follows:
+ * The data object is structured as follows:
  *
  *      Name        Type    Required             Description
  * ------------- -------- ---------- ----------------------------------
@@ -93,7 +93,7 @@ module.exports.signup = function(data, callback) {
  * password      String   Yes        The user's password in plaintext
  *
  *
- * The callback function is as follows:
+ * The callback function is structured as follows:
  *
  *  Parameters                  Description
  * ------------ --------------------------------------------

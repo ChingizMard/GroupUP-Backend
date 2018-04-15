@@ -9,6 +9,12 @@ activitySchema = new Schema({
   name: String,
   description: String,
   attendees: [Schema.Types.ObjectId],
+  maxAttendees: Number,
+  location: {
+    lat: Number,
+    long: Number
+  },
+  chat: Schema.Types.ObjectId
 
 });
 
@@ -38,5 +44,7 @@ activitySchema.methods.addUserToAttendees = function(user, callback){
   user.acceptedActivities.append(this._id);
   user.save(callback);
 }
+
+activitySchema.methods.findAvailableEvents
 // Turn the schema into a model and export it
 module.exports = mongoose.model('Activity', activitySchema);
